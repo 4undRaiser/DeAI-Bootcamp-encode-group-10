@@ -1,1 +1,1 @@
-This repo will host the assignments for group 10
+## This repo will host the assignments for group 10
