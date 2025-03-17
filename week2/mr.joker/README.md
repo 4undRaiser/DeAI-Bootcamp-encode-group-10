@@ -1,5 +1,12 @@
 # Mr. Joker - AI-Powered Joke Generator
 
+## live
+- 
+
+## Screenshots
+![Screenshot 1](.res/s1.png)  
+![Screenshot 1](.res/s2.png)  
+
 Mr. Joker is a Next.js application that generates customized jokes using OpenAI's GPT-3.5 model. Users can specify various parameters to get jokes tailored to their preferences, and the AI will evaluate the jokes for humor, appropriateness, and potential offensiveness.
 
 ## Features

@@ -1,33 +1,37 @@
-import { openai } from "@ai-sdk/openai";
-import { streamText } from "ai";
-
-// Allow streaming responses up to 30 seconds
-export const maxDuration = 30;
+import { generateText } from "ai"
+import { google } from '@ai-sdk/google';
+import { NextResponse } from "next/server"
 
 export async function POST(req: Request) {
-  // Get JSON body from the request
-  const body = await req.json();
+  try {
+    const { jokeParameters, messages } = await req.json()
+    const { topic, tone, type, temperature } = jokeParameters
 
-  // Extract messages and joke parameters
-  const { messages, jokeParameters } = body;
+    // Get the last user message
+    const lastUserMessage = messages.filter((message: any) => message.role === "user").pop()
 
-  // Use the temperature from joke parameters
-  const temperature = jokeParameters?.temperature || 0.7;
+    // Create system prompt
+    const systemPrompt = `You are a comedy AI assistant specialized in generating jokes.
+Always format your jokes with proper spacing and line breaks.
+Do not use markdown formatting in your responses.
+Keep your jokes appropriate for all audiences.`
 
-  // Create a response stream
-  const result = streamText({
-    model: openai("gpt-4o"),
-    temperature,
-    messages: [
-      {
-        role: "system",
-        content:
-          "You are a professional comedian and joke evaluator who specializes in delivering witty, engaging, and hilarious jokes. Your humor is clever, relatable, and appropriate for all audiences. You excel at various types of comedy including observational humor, wordplay, and situational comedy. Your jokes are well-timed, memorable, and leave your audience laughing out loud. After each joke, you will evaluate it based on four criteria: 1) Funny (1-10): How humorous and entertaining is it? 2) Relatable (1-10): How well does it connect with the audience? 3) Appropriate (1-10): Is it suitable for the intended audience? 4) Offensive (1-10): How potentially offensive or controversial is it? (1 being least offensive, 10 being most offensive). Provide these ratings in a clear, structured format after each joke",
-      },
-      ...messages,
-    ],
-  });
+    // Generate the joke using Gemini
+    const { text } = await generateText({
+      model: google("gemini-1.5-pro"),
+      prompt: lastUserMessage?.content || `Create a ${tone} ${type} joke about ${topic}.`,
+      system: systemPrompt,
+      temperature: temperature,
+    })
 
-  // Return a streaming response
-  return result.toDataStreamResponse();
+    // Return the generated joke
+    return NextResponse.json({
+      role: "assistant",
+      content: text,
+    })
+  } catch (error) {
+    console.error("Error generating joke:", error)
+    return NextResponse.json({ error: "Failed to generate joke" }, { status: 500 })
+  }
 }
+
