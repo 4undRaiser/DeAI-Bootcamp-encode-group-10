@@ -60,14 +60,14 @@ export default function CharacterForm({ character, onSubmit, onCancel }: Charact
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-4">
+    <div className="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto border border-gray-100">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
         {character ? 'Edit Character' : 'Create New Character'}
       </h2>
       
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="space-y-2">
+          <label htmlFor="name" className="block text-sm font-semibold text-gray-700">
             Name
           </label>
           <input
@@ -75,61 +75,61 @@ export default function CharacterForm({ character, onSubmit, onCancel }: Charact
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={`w-full px-3 py-2 border rounded-md ${
-              errors.name ? 'border-red-500' : 'border-gray-300'
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 ${
+              errors.name ? 'border-red-500' : 'border-gray-200'
             }`}
-            placeholder="Character name"
+            placeholder="Enter character name..."
           />
-          {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
+          {errors.name && <p className="mt-1 text-sm text-red-500 font-medium">{errors.name}</p>}
         </div>
         
-        <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+        <div className="space-y-2">
+          <label htmlFor="description" className="block text-sm font-semibold text-gray-700">
             Description
           </label>
           <textarea
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className={`w-full px-3 py-2 border rounded-md ${
-              errors.description ? 'border-red-500' : 'border-gray-300'
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 ${
+              errors.description ? 'border-red-500' : 'border-gray-200'
             }`}
-            rows={3}
-            placeholder="Brief description of the character"
+            rows={4}
+            placeholder="Describe your character's appearance and background..."
           />
-          {errors.description && <p className="mt-1 text-sm text-red-500">{errors.description}</p>}
+          {errors.description && <p className="mt-1 text-sm text-red-500 font-medium">{errors.description}</p>}
         </div>
         
-        <div className="mb-4">
-          <label htmlFor="personality" className="block text-sm font-medium text-gray-700 mb-1">
+        <div className="space-y-2">
+          <label htmlFor="personality" className="block text-sm font-semibold text-gray-700">
             Personality
           </label>
           <textarea
             id="personality"
             value={personality}
             onChange={(e) => setPersonality(e.target.value)}
-            className={`w-full px-3 py-2 border rounded-md ${
-              errors.personality ? 'border-red-500' : 'border-gray-300'
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 ${
+              errors.personality ? 'border-red-500' : 'border-gray-200'
             }`}
-            rows={3}
-            placeholder="Character's personality traits"
+            rows={4}
+            placeholder="Describe your character's traits, behaviors, and motivations..."
           />
-          {errors.personality && <p className="mt-1 text-sm text-red-500">{errors.personality}</p>}
+          {errors.personality && <p className="mt-1 text-sm text-red-500 font-medium">{errors.personality}</p>}
         </div>
         
-        <div className="flex justify-end space-x-2">
+        <div className="flex justify-end space-x-3 pt-4">
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+            className="px-6 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-200"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-indigo-600"
+            className="px-6 py-2.5 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transform hover:scale-[1.02] transition-all duration-200 shadow-sm"
           >
-            {character ? 'Update' : 'Create'}
+            {character ? 'Update Character' : 'Create Character'}
           </button>
         </div>
       </form>
